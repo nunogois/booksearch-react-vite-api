@@ -22,13 +22,18 @@ const cache: { [key: string]: BookResult } = {}
 // /books endpoint, returning the list of books
 router.get('/books', async (req, res) => {
   const { search } = req.query // Use destructuring to get the search query param from the request: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+  let { page, filter } = req.query // Do the same as let for page and filter query params
 
   if (!search)
     return res.status(400).send('Search query parameter is required.')
 
-  const page = req.query.page ?? 1 // Use nullish coalescing operator to have a default (page 1): https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator
-  const url = `https://www.googleapis.com/books/v1/volumes?q=${search}&printType=books&startIndex=${
-    (+page - 1) * 10 // startIndex will be currentPage - 1, multiplied by 10, e.g., for page 1: 0, for page 2: 10, etc
+  // Add the filter query param to the URL, if it exists
+  if (filter && filter !== 'all') filter = `&filter=${filter}`
+  else filter = ''
+
+  const currentPage = page ? +page : 1 // Use ternary operator to get current page as number, otherwise assume default 1: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Conditional_Operator
+  const url = `https://www.googleapis.com/books/v1/volumes?q=${search}${filter}&printType=books&startIndex=${
+    (currentPage - 1) * 10 // startIndex will be currentPage - 1, multiplied by 10, e.g., for page 1: 0, for page 2: 10, etc
   }` // Construct the URL using template string: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
 
   if (cache[url]) return res.json(cache[url]) // If this URL is already cached, return its result instead of proceeding with the request below

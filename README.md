@@ -19,6 +19,8 @@ The main entrypoint and file for this API will be `index.ts`, however the endpoi
 
 Also added a very simple in-memory cache layer to the /books endpoint, using a map where the key is the URL being requested. This way we don't make unnecessary requests to the Google Books API and we get an immediate response back from repeated requests.
 
+Added a lot of comments to the code to explain my thought process.
+
 ## Getting Started
 
 1. Clone the repo: `git clone https://github.com/nunogois/booksearch-react-vite-api.git`;
