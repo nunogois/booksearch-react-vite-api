@@ -32,3 +32,5 @@ It seems like there's an issue with the totalItems property in the response from
 3. Install dependencies: `yarn` or `npm install`;
 4. Run tests: `yarn test` or `npm run test`;
 5. Run the server: `yarn start` or `npm run start`;
+
+Check out [booksearch-react-vite](https://github.com/nunogois/booksearch-react-vite) and follow its instructions to run the front-end, so you can run everything together locally.
