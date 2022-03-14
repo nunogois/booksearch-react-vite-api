@@ -21,6 +21,10 @@ Also added a very simple in-memory cache layer to the /books endpoint, using a m
 
 Added a lot of comments to the code to explain my thought process.
 
+## Known Bugs
+
+It seems like there's an issue with the totalItems property in the response from the Google Books API: https://stackoverflow.com/questions/7266838/google-books-api-returns-json-with-a-seemingly-wrong-totalitem-value - It returns seemingly random results for each page. Because of that, pagination might break at any moment. That's one of the reasons I limited pagination to 10 pages max.
+
 ## Getting Started
 
 1. Clone the repo: `git clone https://github.com/nunogois/booksearch-react-vite-api.git`;

@@ -21,9 +21,11 @@
   "author": "Nuno Góis <github@nunogois.com>",
   "dependencies": {
     "axios": "^0.26.1",
+    "cors": "^2.8.5",
     "express": "^4.17.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jest": "^27.4.1",
     "@types/node": "^17.0.21",

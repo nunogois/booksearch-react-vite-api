@@ -13,7 +13,7 @@ router.get('/', (_, res) => {
 // BookResult type
 interface BookResult {
   total: number
-  books: unknown[]
+  items: unknown[]
 }
 
 // Simple in-memory cache layer for book data based on full URL. In prod, this could be e.g. Redis
@@ -38,18 +38,18 @@ router.get('/books', async (req, res) => {
 
   if (cache[url]) return res.json(cache[url]) // If this URL is already cached, return its result instead of proceeding with the request below
 
-  const { items: books, totalItems: total } = await axios
+  const { items, totalItems: total } = await axios
     .get(url)
     .then(res => res.data) // Make the request using Axios. Use destructuring to get the data from the response: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
 
   cache[url] = {
     total,
-    books
+    items
   } // Add result to the cache layer map, using the final URL as the key
 
   res.json({
     total, // total pages = Math.ceil(data.totalItems / 10)
-    books
+    items
   }) // Return the fresh result
 })
 
