@@ -1,6 +1,6 @@
 import request from 'supertest' // Used supertest: https://github.com/visionmedia/supertest
 import express from 'express'
-import router from './router'
+import router from '../router'
 
 const app = express()
 app.use('/', router)
@@ -17,7 +17,9 @@ describe('booksearch-react-vite-api routes', () => {
   test('GET /books > returns a 400 with an error message, since the search query param is required', async () => {
     const res = await request(app).get('/books')
     expect(res.statusCode).toBe(400)
-    expect(res.text).toBe('Search query parameter is required.')
+    expect(res.text).toBe(
+      'Search query parameter is required and should be at least 3 characters long.'
+    )
   })
 
   test('GET /books?search=keyes > returns books with "keyes"', async () => {
@@ -27,6 +29,6 @@ describe('booksearch-react-vite-api routes', () => {
     expect(res.body.total).toBeGreaterThan(0)
     expect(res.body).toHaveProperty('items')
     expect(res.body.items.length).toBeGreaterThan(0)
-    expect(JSON.stringify(res.body.items[0])).toContain('keyes')
+    expect(JSON.stringify(res.body.items[0]).toLowerCase()).toContain('keyes')
   })
 })
